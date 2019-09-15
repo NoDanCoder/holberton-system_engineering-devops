@@ -1,2 +1,2 @@
 #!/bin/bash
-ls -A | xrags find | wc -l
+find . -not \( -path . -o -path .. \) | wc -l
