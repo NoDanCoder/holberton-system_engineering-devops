@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Get username, user id and Home directory path for the user from /etc/passwd
+FILE="/etc/passwd"
+while IFS=: read -r w1 w2 w3 w4 w5 w6 w7; do
+	printf "The user %s " "$w1"
+	printf "is part of the %s gang, " "$w4"
+	printf "lives in %s " "$w6"
+	printf "and rides %s. " "$w7"
+	printf "%s's place is protected " "$w3"
+	printf "by the passcode %s, " "$w2"
+	printf "more info about the user here: %s\n" "$w5"
+done < $FILE
