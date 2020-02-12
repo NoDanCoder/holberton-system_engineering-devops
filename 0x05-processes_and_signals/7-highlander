@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Bash script that displays a message when dies
+trap sigtrap 15
+sigtrap()
+{
+    echo "I am invincible!!!"
+}
+while ((1)); do
+    echo "To infinity and beyond"
+    sleep 2
+done
