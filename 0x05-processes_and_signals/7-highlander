@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Bash script that displays a message when dies
+# Bash script that displays a message when dies.
 trap sigtrap 15
 sigtrap()
 {
