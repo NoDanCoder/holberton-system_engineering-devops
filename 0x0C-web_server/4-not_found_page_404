@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# install and run nginx web server
+sudo apt-get update -y
+sudo apt-get install nginx -y
+
+echo "Holberton School" | sudo tee /var/www/html/index.nginx-debian.html > /dev/null
+
+put_below="server {"
+comment="# Redirections"
+query="rewrite ^\/redirect_me youtu.be\/w0AOGeqOnFY permanent;"
+sudo sed -i "0,/$put_below/{s//$put_below\n\t$comment\n\t$query\n/}" /etc/nginx/sites-enabled/default
+
+file_404="/var/www/html/404.html"
+sudo touch "$file_404"
+echo "Ceci n'est pas une page" | sudo tee "$file_404" > /dev/null
+
+comment="# 404 error handling"
+query="error_page 404 \/404.html;"
+sudo sed -i "0,/$put_below/{s//$put_below\n\t$comment\n\t$query\n/}" /etc/nginx/sites-enabled/default
+
+sudo service nginx start
