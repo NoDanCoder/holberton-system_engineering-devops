@@ -8,6 +8,6 @@ echo "Holberton School" | sudo tee /var/www/html/index.nginx-debian.html > /dev/
 put_below="server {"
 comment="# Redirections"
 query="rewrite ^\/redirect_me youtu.be\/w0AOGeqOnFY permanent;"
-sudo sed -i "s/$put_below/$put_below\n\t$comment\n\t$query\n/" /etc/nginx/sites-enabled/default
+sudo sed -i "0,/$put_below/{s//$put_below\n\t$comment\n\t$query\n/}" /etc/nginx/sites-enabled/default
 
 sudo service nginx start
