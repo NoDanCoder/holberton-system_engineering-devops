@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Add custom property header according to server
+put_below="server {"
+comment="# Custom Headers"
+query="add_header X-Served-By \$hostname;"
+sudo sed -i "0,/$put_below/{s//$put_below\n\t$comment\n\t$query\n/}" /etc/nginx/sites-enabled/default
+
