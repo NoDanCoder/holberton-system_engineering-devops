@@ -1,0 +1,7 @@
+#!/bin/bash
+# Configure a firewall only listen at 80, 22 and 443 ports
+sudo ufw default deny incoming
+sudo ufw allow 22/tcp
+sudo ufw allow 443/tcp
+sudo ufw allow 80/tcp
+echo "y" | sudo ufw enable
