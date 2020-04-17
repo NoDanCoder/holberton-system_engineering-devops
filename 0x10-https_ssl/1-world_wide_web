@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# prints record of a given domain, USE > prog domain [subdomain]
+output () {
+	dig -t ANY +noall +answer $2.$1 |
+	awk "{ print \"The subdomain $2 is a\", \$4, \"record and points to\", \$5 }"
+}
+
+if [ "$#" -eq 1 ]
+then
+	output $1 www
+	output $1 lb-01
+	output $1 web-01
+	output $1 web-02
+else
+	output $1 $2
+fi
