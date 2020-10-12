@@ -1,31 +1,20 @@
 #!/usr/bin/env bash
-# Install and configure HAProxi
-sudo apt-get install software-properties-common -y
-sudo add-apt-repository ppa:vbernat/haproxy-2.0 -y
-sudo apt-get update -y
-sudo apt-get install haproxy=2.0.\* -y
+# Installs HAproxy and configures it
+apt-get update -y
+apt-get install -y haproxy
 
-# HAproxy runs on startup
-comment="# Set ENABLED to 1 if you want the init script to start haproxy."
-config="ENABLED=1"
-echo -e "\n$comment\n$config" | sudo tee -a /etc/default/haproxy > /dev/null
-
-# configuracion backend y frontend 
-conf_back="
-backend web-backend
-	balance roundrobin
-	server 1249-web-01 34.74.105.154:80 check
-	server 1249-web-02 35.229.76.171:80 check
-"
-
-conf_front="
-frontend web-frontend
+CONF="\
+frontend main
 	bind *:80
 	mode http
-	default_backend web-backend
+	default_backend web-server
+
+backend web-server
+	balance roundrobin
+	server 1206-web-01 34.73.70.32:80 check
+	server 1206-web-02 3.85.244.69:80 check
 "
 
-echo "$conf_back$conf_front" | sudo tee -a /etc/haproxy/haproxy.cfg > /dev/null
-
-# start HAProxi
-sudo service haproxy start
+echo "$CONF" >> /etc/haproxy/haproxy.cfg
+echo "ENABLED=1" >> /etc/default/haproxy
+service haproxy start
